@@ -73,15 +73,3 @@
 .toutiao-yuedu:before {
   content: "\e60a";
 }
-body {
-  background-color: skyblue;
-}
-.app-nav-bar {
-  background-color: #3296fa;
-}
-.app-nav-bar .van-nav-bar__title {
-  color: #fff;
-}
-.app-nav-bar .van-icon {
-  color: #fff;
-}
