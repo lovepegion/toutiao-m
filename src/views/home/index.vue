@@ -8,6 +8,7 @@
         icon="search"
         type="info"
         round
+        to="/search"
       >搜索</van-button>
     </van-nav-bar>
 
@@ -36,7 +37,12 @@
       close-icon-position="top-left"
       :style="{ height: '100%' }"
     >
-      <ChannelEdit :userChannels="channels"></ChannelEdit>
+      <ChannelEdit
+        :active="active"
+        :userChannels="channels"
+        @close="isChannelEditShow=false"
+        @updateActive="active=$event"
+      ></ChannelEdit>
     </van-popup>
   </div>
 </template>
@@ -45,6 +51,8 @@
 import { getUserChannels } from '@/api/user'
 import ArticleList from './components/ArticleList.vue'
 import ChannelEdit from './components/ChannelEdit.vue'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 export default {
   name: 'HomeIndex',
   components: { ArticleList, ChannelEdit },
@@ -52,17 +60,32 @@ export default {
     return {
       active: 0,
       channels: [],
-      isChannelEditShow: true // 控制频道编辑
+      isChannelEditShow: false // 控制频道编辑
+    }
+  },
+  computed: {
+    ...mapState(['user'])
+  },
+  methods: {
+    async loadChannels () {
+      let channels = []
+      if (this.user) {
+        const { data } = await getUserChannels()
+        channels = data.data.channels
+      } else {
+        const localChannels = getItem('userChannels')
+        if (localChannels) {
+          channels = localChannels
+        } else { // 如果没有本地存储，获取服务端默认的匿名频道列表
+          const { data } = await getUserChannels()
+          channels = data.data.channels
+        }
+      }
+      this.channels = channels
     }
   },
   created () {
     this.loadChannels()
-  },
-  methods: {
-    async loadChannels () {
-      const { data } = await getUserChannels()
-      this.channels = data.data.channels
-    }
   }
 }
 </script>

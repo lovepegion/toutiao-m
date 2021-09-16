@@ -84,7 +84,9 @@ export default {
         console.log(res)
         this.$toast.success('登录成功')
         this.$store.commit('setUser', res.data.data) // 登录后，将后台的token存储在vuex上
-        this.$router.back() // 登录成功返回原来的浏览页面,但这种方式有缺陷
+        this.$store.commit('removeCachePages', 'LayoutIndex') // 登录后移除上次layoutindex页面的缓存
+        // this.$router.back() // 登录成功返回原来的浏览页面,但这种方式有缺陷，比如从百度页面直接输入地址登录，则登录成功会返回百度页
+        this.$router.push(this.$route.query.redirect || '/') // 从组件内的某个页面而来就跳转回，如果从其他地方登录就跳转到主页，京东就是这么做的
       } catch (err) {
         console.log(err)
         console.log('登录失败')

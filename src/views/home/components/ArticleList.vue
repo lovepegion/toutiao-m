@@ -1,5 +1,5 @@
 <template>
-  <div class="article-list">
+  <div class="article-list" ref="articleList">
     <van-pull-refresh
       v-model="isRefreshLoading"
       :success-text="refreshSuccessText"
@@ -26,6 +26,7 @@
 <script>
 import { getArticles } from '@/api/article'
 import ArticleItem from '@/components/ArticleItem/'
+import { debounce } from 'lodash'
 export default {
   name: 'ArticleList',
   components: { ArticleItem },
@@ -42,7 +43,8 @@ export default {
       finished: false,
       timestamp: null,
       isRefreshLoading: false, // 控制下拉刷新
-      refreshSuccessText: ''
+      refreshSuccessText: '',
+      scrollTop: 0 // 滚动条距离顶部的距离，因为切换时，要保持这个距离不变
     }
   },
   methods: {
@@ -82,6 +84,15 @@ export default {
       this.isRefreshLoading = false
       this.refreshSuccessText = `更新了${results.length}条数据`
     }
+  },
+  mounted () {
+    const articleList = this.$refs.articleList
+    articleList.onscroll = debounce(() => { // 监听滚动事件，debounce防抖
+      this.scrollTop = articleList.scrollTop
+    }, 50)
+  },
+  activated () { // 从缓存中激活时,保持之前的滚动条
+    this.$refs.articleList.scrollTop = this.scrollTop
   }
 }
 </script>

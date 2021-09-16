@@ -23,6 +23,7 @@
           class="update-btn"
           size="small"
           round
+          to="/user/profile"
         >编辑资料</van-button>
       </van-cell>
       <!-- 头条关注粉丝获赞 -->
@@ -55,7 +56,13 @@
     </van-cell-group>
 
     <div v-else class="not-login">
-      <div @click="$router.push('/login')">
+      <!-- 手动跳转登录页登录后，路由会根据redirect回到my页面 -->
+      <div @click="$router.push({
+        name: 'login',
+        query: {
+          redirect: '/my'
+        }
+      })">
         <van-image
           round
           width="66"
@@ -73,7 +80,11 @@
     </van-grid>
 
     <van-cell title="消息通知" is-link url="/" />
-    <van-cell class="mb-4" title="小智同学" is-link to="/" />
+    <van-cell
+      class="mb-4"
+      title="智能客服"
+      is-link to="/user/chat"
+    />
     <van-cell v-if="user" class="logout" title="退出登录" @click="onLogout" />
   </div>
 </template>

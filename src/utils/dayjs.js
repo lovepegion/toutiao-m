@@ -12,3 +12,7 @@ dayjs.locale('zh-cn') // 配置中文语言包
 Vue.filter('relativeTime', value => { // 全局过滤器
   return dayjs(value).from(dayjs())
 })
+
+Vue.filter('dateTime', (value, format = 'YYYY-MM-DD HH:mm:ss') => { // 全局过滤器
+  return dayjs(value).format(format)
+})
