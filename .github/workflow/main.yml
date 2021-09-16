@@ -1,0 +1,37 @@
+name: build and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 下载仓库代码
+      - user: actions/checkout@v2
+
+      # 缓存依赖
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')}}
+          restore-key: 
+            ${{ runner.os }}-node-
+      
+      # 安装依赖
+      - run: npm ci
+
+      # 打包构建
+      - run: npm run build
+
+      # 发布到GitHub Pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.SIGNIN }}
+          PUBLISH_BRACH: gh-pages
+          PUBLISH_DIR: ./dis
