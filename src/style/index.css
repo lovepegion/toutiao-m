@@ -1,7 +1,7 @@
 @font-face {
   font-family: "toutiao";
   /* Project id 2793160 */
-  src: url('//at.alicdn.com/t/font_2793160_6n6g4busde.woff2?t=1630920622502') format('woff2'), url('//at.alicdn.com/t/font_2793160_6n6g4busde.woff?t=1630920622502') format('woff'), url('//at.alicdn.com/t/font_2793160_6n6g4busde.ttf?t=1630920622502') format('truetype');
+  src: url('//at.alicdn.com/t/font_2793160_oig206dtflb.woff2?t=1632405281495') format('woff2'), url('//at.alicdn.com/t/font_2793160_oig206dtflb.woff?t=1632405281495') format('woff'), url('//at.alicdn.com/t/font_2793160_oig206dtflb.ttf?t=1632405281495') format('truetype');
 }
 .toutiao {
   font-family: "toutiao" !important;
@@ -9,6 +9,9 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.toutiao-gengduo-shuxiang:before {
+  content: "\e8c4";
 }
 .toutiao-lishi:before {
   content: "\e63c";
@@ -72,6 +75,12 @@
 }
 .toutiao-yuedu:before {
   content: "\e60a";
+}
+@font-face {
+  font-family: 'dorable';
+  src: url('fonts/dorable.TTF');
+  font-weight: normal;
+  font-style: normal;
 }
 body {
   background-color: #f5f7f9;

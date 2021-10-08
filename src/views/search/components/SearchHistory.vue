@@ -27,12 +27,7 @@
 // import { setItem } from '@/utils/storage'
 export default {
   name: 'SearchHistory',
-  props: {
-    searchHistories: {
-      type: Array,
-      required: true
-    }
-  },
+  props: ['searchHistories'],
   data () {
     return {
       isDeleteShow: false // 是否显示删除

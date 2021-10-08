@@ -6,24 +6,24 @@ import request from '@/utils/request'
 /**
   * 获取搜索联想建议
   */
-export const getSearchSuggestions = q => {
+export const getSearchSuggestions = query => {
+  let suggestionUrl = ''
+  if (query.type) suggestionUrl = `/search/suggest?keywords=${query.keywords}&type=${query.type}`
+  else suggestionUrl = `/search/suggest?keywords=${query.keywords}`
   return request({
     method: 'GET',
-    url: '/app/v1_0/suggestion',
-    params: {
-      q // 联想建议关键词
-    }
+    url: suggestionUrl
   })
 }
 
 /**
   * 获取搜索结果
   */
-export const getSearchResult = params => {
+export const getSearchResult = query => {
+  console.log('searchquery', query)
   return request({
     method: 'GET',
-    url: '/app/v1_0/search',
-    params
+    url: `/search?keywords=${query.keywords}&type=${query.type}&limit=${query.limit}&offset=${query.offset}`
   })
 }
 

@@ -1,71 +1,44 @@
 /**
- * 文章相关请求模块
+ * 歌单相关请求模块
  */
 import request from '@/utils/request'
 
 /**
- * 获取文章列表
+ * 获取每日推荐歌曲
  */
-export const getArticles = params => {
+export const getDailyRecommands = () => {
   return request({
     method: 'GET',
-    url: '/app/v1_1/articles',
-    params
+    url: '/top/song?type=0'
   })
 }
 
 /**
- * 获取文章详情
+ * 获取歌单分类
  */
-export const getArticleById = articleId => {
+export const getMusicCatlist = () => {
   return request({
     method: 'GET',
-    url: `/app/v1_0/articles/${articleId}`
+    url: '/playlist/catlist'
   })
 }
 
 /**
- * 收藏文章
+ * 网友推荐歌单
  */
-export const addCollect = articleId => {
+export const getNetRecommands = () => {
   return request({
-    method: 'POST',
-    url: '/app/v1_0/article/collections',
-    data: {
-      target: articleId
-    }
+    method: 'GET',
+    url: '/top/playlist'
   })
 }
 
 /**
- * 取消收藏
+ * 获取歌单详情
  */
-export const deleteCollect = articleId => {
+export const getClassifyDetail = id => {
   return request({
-    method: 'DELETE',
-    url: `/app/v1_0/article/collections/${articleId}`
-  })
-}
-
-/**
- * 文章点赞
- */
-export const addLike = articleId => {
-  return request({
-    method: 'POST',
-    url: '/app/v1_0/article/likings',
-    data: {
-      target: articleId
-    }
-  })
-}
-
-/**
- * 取消点赞
- */
-export const deleteLike = articleId => {
-  return request({
-    method: 'DELETE',
-    url: `/app/v1_0/article/likings/${articleId}`
+    method: 'GET',
+    url: `/playlist/detail?id=${id}`
   })
 }

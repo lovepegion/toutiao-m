@@ -1,97 +1,74 @@
 import request from '@/utils/request'
 // import store from '@/store/' // 非组件实例中获取store
 
-// 登录/注册
-export const login = data => {
-  return request({
-    method: 'POST',
-    url: '/app/v1_0/authorizations',
-    data
-  })
-}
-
-// 黑马头条发送短信验证码
-export const sendSms = mobile => {
+// 检查手机是否已经注册
+export const checkPhone = phone => {
   return request({
     method: 'GET',
-    url: `/app/v1_0/sms/codes/${mobile}`
+    url: `/cellphone/existence/check?phone=${phone}`
   })
 }
 
-/**
- * 获取当前用户登录信息
- */
-export const getCurrentUser = mobile => {
+// 发送验证码
+export const getCaptcha = phone => {
   return request({
     method: 'GET',
-    url: '/app/v1_0/user'
-    // headers: { // 统一在拦截器里面验证token，不用每个请求都写
-    //   Authorization: `Bearer ${store.state.user.token}` // 服务器后端要求的写法,bearer是后端自定义的识别符号
-    // }
+    url: `/captcha/sent?phone=${phone}`
   })
 }
 
-/**
- * 获取用户频道列表
- */
-export const getUserChannels = () => {
+// 校验验证码是否正确
+export const checkCaptcha = query => {
   return request({
     method: 'GET',
-    url: '/app/v1_0/user/channels'
+    url: `/captcha/verify?phone=${query.phone}&captcha=${query.captcha}`
   })
 }
 
-/**
- * 关注用户
- */
-export const addFollow = userId => {
-  return request({
-    method: 'POST',
-    url: '/app/v1_0/user/followings',
-    data: {
-      target: userId
-    }
-  })
-}
-
-/**
- * 取消关注
- */
-export const deleteFollow = userId => {
-  return request({
-    method: 'DELETE',
-    url: `/app/v1_0/user/followings/${userId}`
-  })
-}
-
-/**
- * 获取用户资料
- */
-export const getUserProfile = () => {
+// 请求注册
+export const sendRegister = query => {
   return request({
     method: 'GET',
-    url: '/app/v1_0/user/profile'
+    url: `/register/cellphone?phone=${query.phone}&password=${query.password}&captcha=${query.captcha}&nickname=${query.nickname}`
   })
 }
 
-/**
- * 修改用户个人资料
- */
-export const updateUserProfile = data => {
+// 登录
+export const login = query => {
   return request({
-    method: 'PATCH',
-    url: '/app/v1_0/user/profile',
-    data
+    method: 'GET',
+    url: `/login/cellphone?phone=${query.phone}&password=${query.password}`
   })
 }
 
-/**
- * 修改用户头像资料
- */
-export const updateUserPhoto = data => {
+// 退出
+export const loginOut = () => {
   return request({
-    method: 'PATCH',
-    url: '/app/v1_0/user/photo',
-    data
+    method: 'GET',
+    url: '/logout'
+  })
+}
+
+// 获取用户详情
+export const getUserDetail = uid => {
+  return request({
+    method: 'GET',
+    url: `/user/detail?uid=${uid}`
+  })
+}
+
+// 获取用户关注列表
+export const getUserfollows = uid => {
+  return request({
+    method: 'GET',
+    url: `/user/follows?uid=${uid}`
+  })
+}
+
+// 发表评论
+export const putComment = query => {
+  return request({
+    method: 'GET',
+    url: `/comment?t=${query.t}&type=${query.type}&id=${query.id}&content=${query.content}`
   })
 }
