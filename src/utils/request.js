@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-// 创建request实例
+// 创建request实例应用
 const request = axios.create({
-  baseURL: 'http://g2xy4e.natappfree.cc/',
+  baseURL: 'http://120.55.101.210:3000',
   timeout: 5000
 })
 
